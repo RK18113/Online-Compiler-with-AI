@@ -16,6 +16,8 @@ import AIPrompt from "./Components/AIPrompt";
 import { LoginPage } from "./Components/LoginPage";
 import { CodeListModal } from "./Components/CodeListModal";
 
+const API_BASE_URL = "http://localhost:3000";
+
 function PrivateRoute({ children }) {
   const token = localStorage.getItem("token");
   return token ? children : <Navigate to="/login" />;
@@ -34,9 +36,8 @@ function App() {
   const [savedCodes, setSavedCodes] = useState([]);
 
   useEffect(() => {
-    setOutput("")
-  }, [])
-  
+    setOutput("");
+  }, []);
 
   const [outputButtonStyle, setOutputButtonStyle] = useState(
     "p-1 border-2 rounded-md rounded-b-none text-white pr-2 pl-2 bg-[#C4DAD2] text-black"
@@ -58,15 +59,12 @@ function App() {
       if (!name) return;
 
       const emailId = localStorage.getItem("userEmail");
-      const response = await axios.post(
-        "http://localhost:3000/api/code/saveCode",
-        {
-          name,
-          language,
-          code,
-          emailId,
-        }
-      );
+      const response = await axios.post(`${API_BASE_URL}/api/code/saveCode`, {
+        name,
+        language,
+        code,
+        emailId,
+      });
 
       alert("Code saved successfully!");
     } catch (error) {
@@ -77,12 +75,9 @@ function App() {
   const handleLoad = async () => {
     try {
       const emailId = localStorage.getItem("userEmail");
-      const response = await axios.get(
-        "http://localhost:3000/api/code/getAllCode",
-        {
-          params: { emailId },
-        }
-      );
+      const response = await axios.get(`${API_BASE_URL}/api/code/getAllCode`, {
+        params: { emailId },
+      });
       setSavedCodes(response.data.data);
       setIsLoadModalOpen(true);
     } catch (error) {
@@ -177,14 +172,11 @@ function App() {
     try {
       setAiHint(["Analysing Please Wait..."]);
       handleAiHintClick();
-      const response = await axios.post(
-        "http://localhost:3000/api/ai/analyseCode",
-        {
-          code: editorRef.current.getValue(),
-          error: "", // Provide an empty string or your own error message if needed
-          prompt: AiPrompt,
-        }
-      );
+      const response = await axios.post(`${API_BASE_URL}/api/ai/analyseCode`, {
+        code: editorRef.current.getValue(),
+        error: "", // Provide an empty string or your own error message if needed
+        prompt: AiPrompt,
+      });
       console.log(response.data.hint);
       setAiHint(response.data.hint);
       // Set to false so that the AIbox is shown instead of AIPrompt
@@ -199,7 +191,7 @@ function App() {
   async function handleRunCode() {
     try {
       setOutput(["Executing Please Wait..."]);
-      const response = await axios.post("http://localhost:3000/api/code/run", {
+      const response = await axios.post(`${API_BASE_URL}/api/code/run`, {
         code: editorRef.current.getValue(),
         stdin: input,
         language: language,
