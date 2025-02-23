@@ -16,7 +16,7 @@ import AIPrompt from "./Components/AIPrompt";
 import { LoginPage } from "./Components/LoginPage";
 import { CodeListModal } from "./Components/CodeListModal";
 
-const API_BASE_URL = "http://localhost:3000";
+const API_BASE_URL = "https://online-compiler-with-ai.onrender.com";
 
 function PrivateRoute({ children }) {
   const token = localStorage.getItem("token");

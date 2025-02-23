@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 
+const API_BASE_URL = "https://online-compiler-with-ai.onrender.com";
+
 export function LoginPage() {
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
@@ -13,13 +15,10 @@ export function LoginPage() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/auth/login",
-        {
-          emailId,
-          password,
-        }
-      );
+      const response = await axios.post(`${API_BASE_URL}/api/auth/login`, {
+        emailId,
+        password,
+      });
 
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("userEmail", response.data.user.emailId);

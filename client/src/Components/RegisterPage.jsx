@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 
+const API_BASE_URL = "https://online-compiler-with-ai.onrender.com";
+
 export function RegisterPage() {
   const [formData, setFormData] = useState({
     name: "",
@@ -32,22 +34,16 @@ export function RegisterPage() {
     }
 
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/auth/register",
-        {
-          name: formData.name,
-          emailId: formData.emailId,
-          password: formData.password,
-        }
-      );
+      const response = await axios.post(`${API_BASE_URL}/api/auth/register`, {
+        name: formData.name,
+        emailId: formData.emailId,
+        password: formData.password,
+      });
 
-      const loginResponse = await axios.post(
-        "http://localhost:3000/api/auth/login",
-        {
-          emailId: formData.emailId,
-          password: formData.password,
-        }
-      );
+      const loginResponse = await axios.post(`${API_BASE_URL}/api/auth/login`, {
+        emailId: formData.emailId,
+        password: formData.password,
+      });
 
       localStorage.setItem("token", loginResponse.data.token);
       localStorage.setItem("userEmail", loginResponse.data.user.emailId);
