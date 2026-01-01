@@ -298,7 +298,7 @@ function App() {
                       style={{ height: `${100 - aiHeight}%` }}
                     >
                       <div className="flex-none p-2 border-b border-[#C4DAD2]/20 flex justify-between items-center gap-2">
-                        <div>
+                        <div className="flex gap-2">
                           <button
                             className={inputButtonStyle}
                             onClick={handleInputClick}
