@@ -13,7 +13,26 @@ if (!API_KEY) {
 
 // Initialize Gemini AI
 const genAI = new GoogleGenerativeAI(API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+const model = genAI.getGenerativeModel({
+  model: "gemini-2.5-flash-lite",
+  generationConfig: {
+    temperature: 0.4,
+    topP: 1,
+    topK: 32,
+    maxOutputTokens: 4096,
+  },
+  systemInstruction: `
+You are an expert coding assistant and mentor. Your goal is to guide the user to find bugs in their code without directly giving them the solution code.
+
+1. If the user provides code and an error, analyze the code to find the cause of the error.
+2. Provide a HINT about where the error is and the concept involved.
+3. Guide the user's thinking with a question or a pointer.
+4. DO NOT write the corrected code snippet.
+5. If there are NO errors, simply respond with:
+"Awesome there are no errors in this code ✨"
+`,
+});
 
 export async function giveHints(
   code,
@@ -21,9 +40,9 @@ export async function giveHints(
   prompt = "you itself understand"
 ) {
   try {
-    const completePrompt = `${prompt}, with that in mind check this code ${code} and it shows these errors ${error} give me only the hint where the error is and guide me to think in the right way to debug it without directly giving me the answer. if there are no errors then just say "Awesome there are no errors in this code ✨" and nothing else how many times i ask.`;
+    const userMessage = `My code is:\n\`\`\`\n${code}\n\`\`\`\n\nThe error/issue is: ${error}\n\nContext/Prompt: ${prompt}`;
 
-    const result = await model.generateContent(completePrompt);
+    const result = await model.generateContent(userMessage);
     return result.response.text();
   } catch (error) {
     console.error("Error in giveHints:", error);
