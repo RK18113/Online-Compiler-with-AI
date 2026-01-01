@@ -1,26 +1,70 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* For vertical and horizontal scrollbars */
+:root {
+  --color-bg-dark: #161e18;
+  --color-accent-green: #c4dad2;
+  --color-text-light: #ecdfcc;
+  --color-border: #c4dad2;
+}
+
+body {
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-light);
+  font-family: "Roboto Mono", monospace;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Noise Texture Removed */
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s ease-out forwards;
+}
+
+/* Scrollbar Styling */
 ::-webkit-scrollbar {
-    width: 10px; /* width for vertical scrollbar */
-    height: 10px; /* height for horizontal scrollbar */
+  width: 8px;
+  height: 8px;
 }
- 
-/* Track */
+
 ::-webkit-scrollbar-track {
-    background: #888;
+  background: #1a221d;
 }
- 
-/* Handle */
+
 ::-webkit-scrollbar-thumb {
-    background: #504f4f;
+  background: #3e4a42;
+  border-radius: 4px;
 }
- 
-/* Handle on hover */
+
 ::-webkit-scrollbar-thumb:hover {
-    background: #1f1f1f;
+  background: var(--color-accent-green);
 }
