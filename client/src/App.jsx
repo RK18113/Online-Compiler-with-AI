@@ -15,6 +15,7 @@ import AIbox from "./Components/AIbox";
 
 import { LoginPage } from "./Components/LoginPage";
 import { CodeListModal } from "./Components/CodeListModal";
+import { SaveCodeModal } from "./Components/SaveCodeModal";
 
 const API_BASE_URL = "http://localhost:5000";
 
@@ -31,6 +32,7 @@ function App() {
   const [AiHint, setAiHint] = useState(null);
   const [showOutput, setShowOutput] = useState(true);
   const [isLoadModalOpen, setIsLoadModalOpen] = useState(false);
+  const [isSaveModalOpen, setIsSaveModalOpen] = useState(false);
   const [savedCodes, setSavedCodes] = useState([]);
   const [context, setContext] = useState("");
 
@@ -91,13 +93,15 @@ function App() {
     "p-1 rounded-md rounded-b-none text-grey pr-2 pl-2 hover:bg-[#C4DAD2] hover:text-black transition-all duration-200"
   );
 
-  const handleSave = async () => {
+  const handleSave = () => {
+    setIsSaveModalOpen(true);
+  };
+
+  const confirmSave = async (name) => {
     try {
       const code = editorRef.current.getValue();
-      const name = prompt("Enter a name for your code:");
-      if (!name) return;
-
       const emailId = localStorage.getItem("userEmail");
+
       const response = await axios.post(`${API_BASE_URL}/api/code/saveCode`, {
         name,
         language,
@@ -218,12 +222,11 @@ function App() {
 
       setOutput(response.data.run.output.split("\n"));
 
-      // Automatically analyze the AI Hint after code execution
-      await handleAICall();
+      // AI Hint is NOT automatically called here anymore
     } catch (error) {
       console.log(error);
       setOutput(["Error in the Server"]);
-      await handleAICall(error.message); // Pass the error to AI analysis
+      // await handleAICall(error.message); // Pass the error to AI analysis
     }
   }
 
@@ -369,6 +372,11 @@ function App() {
                   onClose={() => setIsLoadModalOpen(false)}
                   codes={savedCodes}
                   onSelect={handleCodeSelect}
+                />
+                <SaveCodeModal
+                  isOpen={isSaveModalOpen}
+                  onClose={() => setIsSaveModalOpen(false)}
+                  onSave={confirmSave}
                 />
               </div>
             </PrivateRoute>
