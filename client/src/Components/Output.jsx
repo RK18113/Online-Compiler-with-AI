@@ -1,15 +1,23 @@
-import React from 'react'
+import React from "react";
 
 function output({ output }) {
   return (
-    <div className=' text-[#ECDFCC] font-robotoMono'>
-      <div className='h-[50vh] w-full overflow-auto bg-[#0f211e] p-3 pt-1 pb-0'>
-      {output ? 
-        output.map((element, index) => <p key={index}>{element}</p>)
-       : "Click \"Run Code\" to execute the code."}
+    <div className="text-[#ECDFCC] font-robotoMono p-2 h-full">
+      <div className="h-full w-full overflow-auto bg-black/30 backdrop-blur-md rounded-lg border border-[#C4DAD2]/20 p-3 shadow-inner">
+        {output ? (
+          output.map((element, index) => (
+            <p key={index} className="mb-1">
+              {element}
+            </p>
+          ))
+        ) : (
+          <span className="opacity-50 italic">
+            Click "Run Code" to execute the code.
+          </span>
+        )}
       </div>
     </div>
-  )
+  );
 }
 
-export default output
+export default output;
