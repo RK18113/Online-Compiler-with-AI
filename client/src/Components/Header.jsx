@@ -54,6 +54,12 @@ function Header({
 
         <div className="flex items-center">
           <button
+            className="p-1 px-2 rounded-lg m-2 text-green-400 border-2 border-green-500 hover:bg-green-500 hover:text-black font-bold"
+            onClick={() => navigate('/gym')}
+          >
+            PyTorch Gym
+          </button>
+          <button
             className="p-1 px-2 rounded-lg m-2 text-[#ECDFCC] border-2 border-[#C4DAD2] hover:bg-[#C4DAD2] hover:text-black"
             onClick={handleSave}
           >

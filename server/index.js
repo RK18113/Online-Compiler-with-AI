@@ -9,6 +9,7 @@ import languageVersions from "./languageVersion.js";
 import authRouter from "./routes/authRoute.js";
 import aiRouter from "./routes/aiRoute.js";
 import codeRouter from "./routes/codeRoute.js";
+import gymRouter from "./routes/gymRoutes.js";
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use(express.json());
 app.use("/api/ai", aiRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/code", codeRouter);
+app.use("/api/gym", gymRouter);
 
 // Error handling middleware (optional but recommended)
 app.use((err, req, res, next) => {
@@ -39,3 +41,5 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
+
+

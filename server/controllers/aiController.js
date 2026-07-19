@@ -13,7 +13,7 @@ if (!API_KEY) {
 
 // Initialize Gemini AI
 const genAI = new GoogleGenerativeAI(API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
 export async function giveHints(
   code,

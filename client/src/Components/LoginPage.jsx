@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
 
-const API_BASE_URL = "https://online-compiler-with-ai.onrender.com";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://online-compiler-with-ai.onrender.com";
 
 export function LoginPage() {
   const [emailId, setEmailId] = useState("");

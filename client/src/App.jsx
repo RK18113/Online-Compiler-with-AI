@@ -15,8 +15,9 @@ import AIbox from "./Components/AIbox";
 import AIPrompt from "./Components/AIPrompt";
 import { LoginPage } from "./Components/LoginPage";
 import { CodeListModal } from "./Components/CodeListModal";
+import { PyTorchGym } from "./Pages/PyTorchGym";
 
-const API_BASE_URL = "https://online-compiler-with-ai.onrender.com";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://online-compiler-with-ai.onrender.com";
 
 function PrivateRoute({ children }) {
   const token = localStorage.getItem("token");
@@ -294,6 +295,14 @@ function App() {
                   onSelect={handleCodeSelect}
                 />
               </div>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/gym"
+          element={
+            <PrivateRoute>
+              <PyTorchGym />
             </PrivateRoute>
           }
         />
